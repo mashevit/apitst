@@ -86,13 +86,13 @@
 			</dependency> <dependency> <groupId>org.glassfish.jersey.core</groupId> <artifactId>jersey-client</artifactId> 
 			<version>${jersey.version}</version> </dependency> <dependency> <groupId>com.owlike</groupId> 
 			<artifactId>genson</artifactId> <version>${genson.version}</version> </dependency> -->
-<dependency> <groupId>org.glassfish.jersey.core</groupId> <artifactId>jersey-server</artifactId> 
+<!-- <dependency> <groupId>org.glassfish.jersey.core</groupId> <artifactId>jersey-server</artifactId> 
 			<version>${jersey.version}</version> </dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet-core</artifactId>
 			<version>${jersey.version}</version>
-		</dependency>
+		</dependency> -->
 <!-- 		 <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>jaxrs-api</artifactId>
@@ -107,11 +107,11 @@
     <scope>provided</scope>
 </dependency>
         
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>${jersey.version}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>org.eclipse.persistence.jpa</artifactId>
