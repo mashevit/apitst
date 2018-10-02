@@ -1,4 +1,4 @@
-package config;
+/*package config;
 
 import javax.inject.Singleton;
 
@@ -24,3 +24,4 @@ public class ApplicationBinder extends AbstractBinder{
 	}
 
 }
+*/
