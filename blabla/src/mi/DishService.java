@@ -4,21 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.enterprise.inject.Model;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import api.DishCSClass;
 import api.DishClass;
 import blabla.Dish;
 import blabla.Ingrename;
-@Model
-@Singleton
-public class DishService implements DishServiceI{
-	@Inject
-	private foodDaoI foodDao;
-	
-	
+//@ApplicationScoped
+
+public class DishService/* implements DishServiceI*/{
+	//@Inject
+	private foodDao foodDao;
+	public DishService() {
+		
+		foodDao=new foodDao();
+		// TODO Auto-generated constructor stub
+	}
 	public DishClass retrieve(int id) {
 		return entityToClass(foodDao.retrieve(id));
 	}

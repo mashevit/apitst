@@ -2,7 +2,6 @@ package api;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,18 +12,27 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import mi.DishServiceI;
+//import org.glassfish.jersey.process.internal.RequestScoped;
+
+import mi.DishService;
 
 	@Path(value = "dish")
+
 	public class DishResource {
+	//@Inject
+		private DishService customerService;
 
-		private final DishServiceI customerService;
-
-		@Inject
+/*		@Inject
 		public DishResource(DishServiceI customerService) {
 			this.customerService = customerService;
-		}
+		}*/
 
+		
+		public DishResource() {
+			customerService=new DishService();
+			// TODO Auto-generated constructor stub
+		}
+		
 		@GET
 		@Path(value = "retrieve/{id}")
 		@Produces(MediaType.APPLICATION_JSON)
