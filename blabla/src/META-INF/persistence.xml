@@ -5,25 +5,10 @@
 		<class>blabla.Indish</class>
 		<class>blabla.Ingrename</class>
 		<properties>
-<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/foodrenew1"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/foodrenew1?useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Jerusalem&amp;useSSL=false"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="qwqw"/> -->
+			<property name="javax.persistence.jdbc.password" value="qwqw"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://mytrips81.coizdbobchof.us-east-1.rds.amazonaws.com:3306/travel1?useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Jerusalem&amp;useSSL=false" />
-			<property name="javax.persistence.jdbc.user" value="ilia" />
-			<property name="javax.persistence.jdbc.password"
-				value="rds8811a" /> 
-<!-- 					<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/travel3?useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Jerusalem&amp;useSSL=false" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password"
-				value="qwqw" />-->
-				
-				
-			<property name="eclipselink.ddl-generation"
-				value="create-tables" />
 		</properties>
 	</persistence-unit>
 </persistence>

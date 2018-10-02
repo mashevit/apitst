@@ -23,5 +23,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Tomcat9library"/>
+	<classpathentry kind="lib" path="/tomcat9DWP/WebContent/WEB-INF/lib/cdi-api-1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

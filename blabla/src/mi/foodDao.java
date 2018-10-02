@@ -2,6 +2,7 @@ package mi;
 
 import java.util.List;
 
+import javax.enterprise.inject.Model;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +13,7 @@ import javax.persistence.Query;
 import blabla.Dish;
 import blabla.Indish;
 import blabla.Ingrename;
-
+@Model
 @Singleton
 public class foodDao implements foodDaoI{
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("blabla");

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -11,7 +12,7 @@ import api.DishCSClass;
 import api.DishClass;
 import blabla.Dish;
 import blabla.Ingrename;
-
+@Model
 @Singleton
 public class DishService implements DishServiceI{
 	@Inject
