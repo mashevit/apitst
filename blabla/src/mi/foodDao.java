@@ -179,7 +179,7 @@ public class foodDao/* implements foodDaoI*/{
 				    }
 				Indish ind=new Indish();
 			
-				ind.setIngrename(ing);
+				ind.setIngrename(ing);//
 				ind.setDish(touse);
 			//	transaction.begin();
 				em.getTransaction().begin();
