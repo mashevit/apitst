@@ -1,6 +1,7 @@
 package mi;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -54,13 +55,26 @@ public class foodDao/* implements foodDaoI*/{
 		//emf.close();
 		return lct;
 	}
+	
+	public List<Indish> getAllIndish(/*Dish dish*/){
+		EntityManager em = emf.createEntityManager();
+		//query query = em.createQuery("Select i From Indish i Join i.dish j Where j.iddish =: id").setParameter("id", dish.getIddish());
+		Query query = em.createNamedQuery("Indish.findAll");
+		@SuppressWarnings("unchecked")
+		List<Indish> ans = query.getResultList();
+		em.close();
+		//emf.close();
+		return ans;
+		
+		
+	}
 	  public void delete(int id) {
 	        EntityManager em = emf.createEntityManager();
 
-	        EntityTransaction transaction = em.getTransaction();
+	   //     EntityTransaction transaction = em.getTransaction();
 
 	        try {
-	            transaction.begin();
+	          //  transaction.begin();
 
 	            Dish entity = em.find(Dish.class, id);
 
@@ -68,14 +82,43 @@ public class foodDao/* implements foodDaoI*/{
 	                System.out.println("Error Deleting Dish: Dish not found");
 	            }
 	            else {
-	                em.remove(entity);
+	            	List<Ingrename> tmpp= getAllCS(entity);
+	            	List<Indish> tmpi=getAllIndish();
+	            	List<Integer> c =tmpp.stream().map(Ingren->Ingren.getIdingrenames()).collect(Collectors.toList());
+	            	//List<Integer> d =tmpi.stream().map(Ingrenid->Ingrenid.getIngrename().getIdingrenames()).collect(Collectors.toList());
+	            	for(int i=0;i<c.size();i++) {
+	            		int curr = c.get(i).intValue();
+	            	 List<Indish> Exists = tmpi.stream().filter(item -> (curr==item.getIngrename().getIdingrenames())).collect(Collectors.toList());
+	            	 for(int k=0;k<Exists.size();k++) {
+	            		 Indish curre=Exists.get(k);
+	            		 if(curre.getDish().getIddish()==entity.getIddish()) {
+	            			 em.getTransaction().begin();	            				
+	            			 Indish abaa= em.find(Indish.class,curre.getIdindish());
+	            			 em.remove(abaa);
+	            			 em.getTransaction().commit();
+	            			 Exists.remove(k);
+	            		 }
+	            		 if(Exists.size()==0) {		 em.getTransaction().begin();
+	            			 Ingrename aab=em.find(Ingrename.class, tmpp.get(i).getIdingrenames());
+	            			 
+	            		 	em.remove(aab);
+	            		 	em.getTransaction().commit();
+	            		 	tmpp.remove(i);
+	            		 	c.remove(i);i--;
+	            		 }		 em.getTransaction().begin();
+	            		 em.getTransaction().commit();
+	            		 
+	            	 }
+	            	 }		 em.getTransaction().begin();
+	                em.remove(entity); 
+	                em.getTransaction().commit();
 	            }
 
-	            transaction.commit();
+	           
 	        } catch (Exception e) {
 	            System.out.println("Error Deleting Dish: " + e.getMessage());
 
-	            transaction.rollback();
+	            em.getTransaction().rollback();
 	        } finally {
 	            em.close();
 	        }
@@ -114,26 +157,32 @@ public class foodDao/* implements foodDaoI*/{
 			int b= findByStr(a);
 			Dish touse;
 			if(b!=-1)  touse= retrieve(b);
-			else {touse=new Dish();touse.setDishname(a);em.getTransaction().begin();
+			else {touse=new Dish();
+			touse.setDishname(a);
+			em.getTransaction().begin();
 			
-			em.persist(touse);em.getTransaction().commit();}
+			em.persist(touse);
+			em.getTransaction().commit();}
 			try {
 			for(int i=0;i<ingreds.size();i++) {
 				//transaction.begin();
-				Ingrename tmp=findByStrIngredi(ingreds.get(i));
-				Ingrename ing = new Ingrename();
-				if (tmp!=null) 
-					ing=tmp;
-				else
+				int tmp=findByStrIngredi(ingreds.get(i));
+				Ingrename ing;
+				if (tmp!=-1) 
+					ing=em.find(Ingrename.class, tmp);
+				else {ing = new Ingrename();
 				    ing.setIngrname(ingreds.get(i));
+					em.getTransaction().begin();
+					em.persist(ing);
+					em.getTransaction().commit();
+	
+				    }
 				Indish ind=new Indish();
-				em.getTransaction().begin();
-				em.persist(ing);
-				em.getTransaction().commit();
-				em.getTransaction().begin();
+			
 				ind.setIngrename(ing);
 				ind.setDish(touse);
 			//	transaction.begin();
+				em.getTransaction().begin();
 				em.persist(ind);
 			
 				em.getTransaction().commit();
@@ -160,7 +209,7 @@ public class foodDao/* implements foodDaoI*/{
 		public int findByStr(String name) {
 	
 			EntityManager em = emf.createEntityManager();		
-			String statement = "SELECT d FROM Dish d WHERE d.dishname= :cn";
+			String statement = "SELECT d FROM Dish d WHERE d.dishname = :cn";
 			Query q = em.createQuery(statement).setParameter("cn", name);
 			@SuppressWarnings("unchecked")
 			List<Dish> lct = q.getResultList();		
@@ -169,15 +218,15 @@ public class foodDao/* implements foodDaoI*/{
 			
 		}
 		
-		public Ingrename findByStrIngredi(String name) {
+		public int findByStrIngredi(String name) {
 			
 			EntityManager em = emf.createEntityManager();		
-			String statement = "SELECT i FROM Ingrename i WHERE i.ingrname= :cn";
+			String statement = "SELECT i FROM Ingrename i WHERE i.ingrname = :cn";
 			Query q = em.createQuery(statement).setParameter("cn", name);
 			@SuppressWarnings("unchecked")
 			List<Ingrename> lct = q.getResultList();		
-			if(lct.size()==0) return null;
-			return lct.get(0);
+			if(lct.size()==0) return -1;
+			return lct.get(0).getIdingrenames();
 			
 		}
 
