@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import api.IndishClass;
 import blabla.Dish;
 import blabla.Indish;
 import blabla.Ingrename;
@@ -24,6 +25,22 @@ public class foodDao/* implements foodDaoI*/{
 
 		try {
 			entity = em.find(Dish.class, id);
+		} finally {
+			em.close();
+		}
+		
+		return entity;
+
+		
+	}
+	
+	
+	public Ingrename retrieveIngredById(int id) {
+		EntityManager em = emf.createEntityManager();
+		Ingrename entity = null;
+
+		try {
+			entity = em.find(Ingrename.class, id);
 		} finally {
 			em.close();
 		}
@@ -124,6 +141,131 @@ public class foodDao/* implements foodDaoI*/{
 	        }
 	    }
 	  
+	  	public int delIngrediFromFood(IndishClass ids) {
+	  		 EntityManager em = emf.createEntityManager();
+	  		 int idingre=ids.getIdIngred();
+	  		 String statement = "select a from Indish a join a.dish d join a.ingrename i where d.iddish=:iddi and i.idingrenames=:idid";
+	  		 Query q = em.createQuery(statement).setParameter("iddi", ids.getIdDish()).setParameter("idid", idingre);
+	  		 @SuppressWarnings("unchecked")
+			List<Indish> ans = q.getResultList();
+	  		 if(ans.size()==0) return -1;
+	  		 else if (CountDishByIngreds(idingre)>1){ em.getTransaction().begin(); em.remove(ans.get(0)); 
+              em.getTransaction().commit();
+              }
+	  		 else { em.getTransaction().begin();
+	  			em.remove(ans.get(0)); 
+	  		  em.getTransaction().commit();
+	  		 em.getTransaction().begin();
+	  			Ingrename acac=em.find(Ingrename.class, idingre);
+	  		  em.remove(acac);
+	  		  em.getTransaction().commit();
+	  		  }
+	  		 return 0;//ans.get(0).getIdindish();
+	  	}
+	  	
+	  	public void addIngrediToFood(IndishClass ids) {
+	  		 EntityManager em = emf.createEntityManager();
+	  		 Indish med=new Indish();
+	  		 med.setDish(retrieve(ids.getIdDish()));
+	  		 med.setIngrename(retrieveIngredById(ids.getIdIngred()));
+	 		try {
+	  		em.getTransaction().begin();
+	  		em.persist(med);
+	  		em.getTransaction().commit();
+	 		} catch (Exception e) {
+				System.out.println("Error Saving Customer: " + e.getMessage());
+
+				em.getTransaction().rollback();
+			} finally {
+				
+				em.close();
+				
+			}
+
+	  		 
+	  	}
+	  	
+		public int edit(Dish customer) {
+			EntityManager em = emf.createEntityManager();
+			Dish entity=null;
+//			int a = findByStr(customer.getDishname());
+//			if (a!=-1) return a;
+			EntityTransaction transaction = em.getTransaction();
+			
+			try {
+				entity = em.find(Dish.class, customer.getIddish());
+				transaction.begin();
+				entity.setDishname(customer.getDishname());
+	            em.merge(entity);
+
+				transaction.commit();
+			
+			} catch (Exception e) {
+				System.out.println("Error Saving Customer: " + e.getMessage());
+
+				transaction.rollback();
+			} finally {
+				
+				em.close();
+				
+			}
+			return customer.getIddish();
+			///return -1;
+		}
+		
+		
+		public int editingre(Ingrename customer) {
+			EntityManager em = emf.createEntityManager();
+			Ingrename entity=null;
+//			int a = findByStr(customer.getDishname());
+//			if (a!=-1) return a;
+			EntityTransaction transaction = em.getTransaction();
+			
+			try {
+				entity = em.find(Ingrename.class, customer.getIdingrenames());
+				transaction.begin();
+				entity.setIngrname(customer.getIngrname());
+	            em.merge(entity);
+
+				transaction.commit();
+			
+			} catch (Exception e) {
+				System.out.println("Error Saving Ingred: " + e.getMessage());
+
+				transaction.rollback();
+			} finally {
+				
+				em.close();
+				
+			}
+			return customer.getIdingrenames();
+			///return -1;
+		}
+		
+		public List<Dish> search(String name){
+			//EntityManagerFactory emf = Persistence.createEntityManagerFactory("mywb2");
+			EntityManager em = emf.createEntityManager();
+			String statement = "SELECT i FROM Dish i WHERE lower(i.dishname) like lower(concat('%', :nm,'%'))";
+			Query q = em.createQuery(statement).setParameter("nm", name);
+			@SuppressWarnings("unchecked")
+			List<Dish> ans = q.getResultList();
+			em.close();
+			//emf.close();
+			return ans;
+				
+		}
+		
+		public List<Ingrename> searchIngred(String name){
+			EntityManager em = emf.createEntityManager();
+			String statement = "SELECT i FROM Ingrename i WHERE lower(i.ingrname) like lower(concat('%', :nm,'%'))";
+			Query q = em.createQuery(statement).setParameter("nm", name);
+			@SuppressWarnings("unchecked")
+			List<Ingrename> ans = q.getResultList();
+			em.close();
+			return ans;
+				
+		}		
+		
 		public int save(Dish customer) {
 			EntityManager em = emf.createEntityManager();
 			int a = findByStr(customer.getDishname());
@@ -230,4 +372,54 @@ public class foodDao/* implements foodDaoI*/{
 			
 		}
 
+		public int CountDishByIngreds(int idIngrename){
+			EntityManager em = emf.createEntityManager();		
+			String statement = "SELECT Count(d) from Indish a Join a.dish d Join a.ingrename i Where i.idingrenames=:id";
+			Query q = em.createQuery(statement).setParameter("id", idIngrename);
+			int ans =  Math.toIntExact((long) q.getSingleResult());	
+			return ans;
+			
+			
+		}
+		public int saveNewIngre(String name) {
+			EntityManager em = emf.createEntityManager();
+			
+			EntityTransaction transaction = em.getTransaction();
+			Ingrename toSave = new Ingrename();
+			toSave.setIngrname(name);
+			try {
+				transaction.begin();
+
+	            em.persist(toSave);
+
+				transaction.commit();
+			
+			} catch (Exception e) {
+				System.out.println("Error Saving Customer: " + e.getMessage());
+
+				transaction.rollback();
+			} finally {
+				
+				em.close();
+				
+			}
+			return toSave.getIdingrenames();
+			///return -1;
+			
+		}
+		public List<Ingrename> ingredById(int id){
+	
+				
+				//EntityManagerFactory emf = Persistence.createEntityManagerFactory("mywb2");
+				EntityManager em = emf.createEntityManager();		
+				String statement = "SELECT i FROM Indish i1 Join i1.ingrename i WHERE i1 IN (SELECT w FROM Indish w JOIN w.dish z WHERE (z.iddish =:cn)) ORDER BY i.idingrenames";
+				Query q = em.createQuery(statement).setParameter("cn", id);
+				@SuppressWarnings("unchecked")
+				List<Ingrename> lct = q.getResultList();			
+				em.close();
+				//emf.close();
+				return lct;
+		
+			
+		}
 }

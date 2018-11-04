@@ -3,7 +3,7 @@ package api;
 import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DishCSClass implements Serializable {
 
@@ -13,7 +13,7 @@ public class DishCSClass implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	@JsonProperty("dishName")
+	//@JsonProperty("dishName")
 	private String dishName;
 	private List<String> ingreds;
 	public List<String> getIngreds() {

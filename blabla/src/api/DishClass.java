@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
 public class DishClass implements Serializable {
@@ -15,7 +15,7 @@ public class DishClass implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	@JsonProperty("dishName")
+	//@JsonProperty("dishName")
 	private String dishName;
 
 	public DishClass() {

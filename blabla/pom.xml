@@ -68,7 +68,19 @@
 			<version>3.0.12.Final</version>
 			<scope>provided</scope>
 		</dependency>
+<!-- https://mvnrepository.com/artifact/org.jboss.resteasy/jaxrs-api -->
+<!-- <dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>jaxrs-api</artifactId>
+    <version>2.3.5.Final</version>
+</dependency> -->
 
+<!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jaxrs -->
+<!-- <dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-jaxrs</artifactId>
+    <version>3.6.1.Final</version>
+</dependency> -->
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -82,6 +94,32 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		
+		
+<!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.annotation/jboss-annotations-api_1.1_spec -->
+<!-- <dependency>
+    <groupId>org.jboss.spec.javax.annotation</groupId>
+    <artifactId>jboss-annotations-api_1.1_spec</artifactId>
+    <version>1.0.1.Final</version>
+</dependency>
+
+https://mvnrepository.com/artifact/org.jboss.spec.javax.ws.rs/jboss-jaxrs-api_1.1_spec
+<dependency>
+    <groupId>org.jboss.spec.javax.ws.rs</groupId>
+    <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+    <version>1.0.1.Final</version>
+    <scope>provided</scope>
+</dependency> -->
+<!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-servlet-initializer -->
+<!-- <dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-servlet-initializer</artifactId>
+    <version>3.6.1.Final</version>
+</dependency> -->
+
+
+
 	</dependencies>
 	
 	<!--
