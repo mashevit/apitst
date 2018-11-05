@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 //import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -29,7 +30,15 @@ import mi.DishService;
 			this.customerService = customerService;
 		}*/
 
-		
+		  @OPTIONS
+		  @Path("/getsample")
+		  public Response getOptions() {
+		    return Response.ok()
+		      .header("Access-Control-Allow-Origin", "*")
+		      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+		      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With").build();
+		  }
+		  
 		public DishResource() {
 			customerService=new DishService();
 			// TODO Auto-generated constructor stub
