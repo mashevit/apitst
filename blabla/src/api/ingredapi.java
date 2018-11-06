@@ -32,14 +32,12 @@ public class ingredapi {
 			customerService=new DishService();
 			// TODO Auto-generated constructor stub
 		}
-		  @OPTIONS
-		  @Path("/getsample")
-		  public Response getOptions() {
-		    return Response.ok()
-		      .header("Access-Control-Allow-Origin", "*")
-		      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-		      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With").build();
-		  }
+		@GET
+		@Path(value = "retrallingr")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<IngredClass> getAll() {
+			return customerService.getAllIngreds();
+		}
 		@GET
 		@Path(value = "retrieveallid/{id}")
 		@Produces(MediaType.APPLICATION_JSON)
@@ -90,4 +88,22 @@ public class ingredapi {
 		public int newIngr(IngredClass ingredClass) {//id of indish to complete deleting process
 			return customerService.addnewIngre(ingredClass);
 		}
+		
+		@GET
+	    @Path(value = "countdfi/{id}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public int countDishesforIngredId(@PathParam("id") int param1){
+		return customerService.countDishforIngredId(param1);
+		    // Store the message
+		 
+		}	
+		
+		@GET
+	    @Path(value = "getdfi/{id}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<DishClass> getDishesforIngredId(@PathParam("id") int param1){
+		return customerService.getDishforIngredId(param1);
+		    // Store the message
+		 
+		}			
 }

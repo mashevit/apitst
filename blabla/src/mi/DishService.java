@@ -112,7 +112,12 @@ public class DishService/* implements DishServiceI*/{
 		return a;
 	}
 	
-	
+	public List<IngredClass> getAllIngreds(){
+		List<IngredClass> a=new ArrayList<>();
+		List<Ingrename> b=foodDao.getAllIngreds();
+		a=b.stream().map(Dishq->entityToClassIngre(Dishq)).collect(Collectors.toList());
+		return a;
+	}
 	
 	public List<DishCSClass> getAllCS(){
 		
@@ -121,6 +126,25 @@ public class DishService/* implements DishServiceI*/{
 		a=b.stream().map(Dishq->entityToClassCS(Dishq)).collect(Collectors.toList());
 		return a;
 		
+	}
+	
+	public List<DishClass> getDishforIngredId(int id){
+		List<Dish> ans=foodDao.findDishesForIngredId(id);
+		List<DishClass> a=new ArrayList<>();
+		//List<Dish> b=foodDao.getAll();
+		a=ans.stream().map(Dishq->entityToClass(Dishq)).collect(Collectors.toList());
+		return a;
+		
+	}
+	
+	public int countDishforIngredId(int id){
+		return foodDao.CountDishByIngreds(id);
+		
+	}
+	
+	
+	public void delforIngredId(int id){
+		foodDao.delForIngredId(id);
 	}
 	
 	

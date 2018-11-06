@@ -422,4 +422,57 @@ public class foodDao/* implements foodDaoI*/{
 		
 			
 		}
+		
+		
+		public List<Ingrename> getAllIngreds(){
+			
+			EntityManager em = emf.createEntityManager();
+			Query query = em.createNamedQuery("Ingrename.findAll");
+			List<Ingrename> ans = query.getResultList();
+			em.close();
+			return ans;
+			
+	}
+		
+		public List<Dish> findDishesForIngredId(int id) {
+			EntityManager em = emf.createEntityManager();
+			String statement = "SELECT i FROM Indish i1 Join i1.dish i WHERE i1 IN (SELECT w FROM Indish w JOIN w.ingrename z WHERE (z.idingrenames =:cn)) ORDER BY i.iddish";
+			Query q = em.createQuery(statement).setParameter("cn", id);
+			@SuppressWarnings("unchecked")
+			List<Dish> lct = q.getResultList();			
+			em.close();
+			//emf.close();
+			return lct;
+			
+		}
+		
+		
+		public List<Dish> countDishesForIngredId(int id) {
+			EntityManager em = emf.createEntityManager();
+			String statement = "SELECT count(i) FROM Indish i1 Join i1.dish i WHERE i1 IN (SELECT w FROM Indish w JOIN w.ingrename z WHERE (z.idingrenames =:cn))";
+			Query q = em.createQuery(statement).setParameter("cn", id);
+			@SuppressWarnings("unchecked")
+			List<Dish> lct = q.getResultList();			
+			em.close();
+			//emf.close();
+			return lct;
+			
+		}
+		
+		
+		public void delForIngredId(int id) {
+			EntityManager em = emf.createEntityManager();
+	
+			
+			 em.getTransaction().begin();	            				
+			 Ingrename abaa= em.find(Ingrename.class,id);
+			 List<Dish> lst = findDishesForIngredId(id);
+			 
+			 if(lst.isEmpty()) {
+			 em.remove(abaa);
+			 em.getTransaction().commit();
+			 em.close();
+			}
+						 
+      }
 }
