@@ -115,7 +115,7 @@ public class DishService/* implements DishServiceI*/{
 	public List<IngredClass> getAllIngreds(){
 		List<IngredClass> a=new ArrayList<>();
 		List<Ingrename> b=foodDao.getAllIngreds();
-		a=b.stream().map(Dishq->entityToClassIngre(Dishq)).collect(Collectors.toList());
+		a=b.stream().map(Dishq->entityToClassIngref(Dishq)).collect(Collectors.toList());
 		return a;
 	}
 	
@@ -190,6 +190,18 @@ public class DishService/* implements DishServiceI*/{
 		return ingredClass;
 	}
 	
+	
+	private IngredClass entityToClassIngref(Ingrename entity) {
+		IngredClass ingredClass = new IngredClass();
+
+		if (entity != null) {
+			ingredClass.setId(entity.getIdingrenames());
+			ingredClass.setIngrName(entity.getIngrname());
+			ingredClass.setNumOfDishes(foodDao.CountDishByIngreds(entity.getIdingrenames()));
+		}
+
+		return ingredClass;
+	}
 	
 	private Dish classToEntity(DishClass customer) {
 		Dish entity = new Dish();
