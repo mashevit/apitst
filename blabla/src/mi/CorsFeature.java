@@ -14,7 +14,7 @@ public class CorsFeature implements Feature {
     public boolean configure(FeatureContext context) {
         CorsFilter corsFilter = new CorsFilter();
      //   https://appfoodang.herokuapp.com
-            corsFilter.getAllowedOrigins().add("https://appfoodang.herokuapp.com");
+          //  corsFilter.getAllowedOrigins().add("https://appfoodang.herokuapp.com");
         corsFilter.getAllowedOrigins().add("*");
         context.register(corsFilter);
         return true;
