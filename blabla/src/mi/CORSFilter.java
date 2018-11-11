@@ -1,22 +1,21 @@
 package mi;
 
-import javax.ws.rs.core.Feature;
-import javax.ws.rs.core.FeatureContext;
-import javax.ws.rs.ext.Provider;
-//import com.thetransactioncompany.cors.*;
+import java.io.IOException;
 
-import org.jboss.resteasy.plugins.interceptors.CorsFilter;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ext.Provider;
 
 @Provider
-public class CorsFeature implements Feature {
-
+public class CORSFilter implements ContainerResponseFilter {
     @Override
-    public boolean configure(FeatureContext context) {
-        CorsFilter corsFilter = new CorsFilter();
-     //   https://appfoodang.herokuapp.com
-            corsFilter.getAllowedOrigins().add("https://appfoodang.herokuapp.com");
-        corsFilter.getAllowedOrigins().add("*");
-        context.register(corsFilter);
-        return true;
-    }  
+    public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) throws IOException {
+        responseContext.getHeaders().putSingle("Access-Control-Allow-Origin", "*");
+        responseContext.getHeaders().putSingle("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        String reqHeader = requestContext.getHeaderString("Access-Control-Request-Headers");
+        if (reqHeader != null && reqHeader != "") {
+            responseContext.getHeaders().putSingle("Access-Control-Allow-Headers", reqHeader);
+        }
+    }
 }
