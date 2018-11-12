@@ -22,7 +22,7 @@ import api.ingredapi;
  */
 @ApplicationPath("/rest")
 public class RestApplicationConfig extends Application {
-/*    private Set<Object> singletons = new HashSet<Object>();
+    private Set<Object> singletons = new HashSet<Object>();
     private Set<Class<?>> classes = new HashSet<Class<?>>();
 
     public RestApplicationConfig() {
@@ -30,13 +30,15 @@ public class RestApplicationConfig extends Application {
         corsFilter.getAllowedOrigins().add("*");
         corsFilter.setAllowedHeaders("Content-Type");
         corsFilter.setAllowedMethods("OPTIONS, GET, POST, DELETE, PUT, PATCH");
-        singletons.add(corsFilter);
+        
         classes.add(akj.class);
         classes.add(anotget.class);
         classes.add(DishResource.class);
         classes.add(ingredapi.class);
         classes.add(OneIngre.class);
         classes.add(QIngred.class);
+        singletons.add(corsFilter);
+ 
         
     }
 
@@ -48,6 +50,6 @@ public class RestApplicationConfig extends Application {
     @Override
     public Set<Object> getSingletons() {
         return singletons;
-    }*/
+    }
     // intentionally empty
 }
