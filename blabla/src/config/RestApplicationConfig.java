@@ -22,7 +22,7 @@ import api.ingredapi;
  */
 @ApplicationPath("/rest")
 public class RestApplicationConfig extends Application {
-    private Set<Object> singletons = new HashSet<Object>();
+/*    private Set<Object> singletons = new HashSet<Object>();
     private Set<Class<?>> classes = new HashSet<Class<?>>();
 
     public RestApplicationConfig() {
@@ -48,6 +48,6 @@ public class RestApplicationConfig extends Application {
     @Override
     public Set<Object> getSingletons() {
         return singletons;
-    }
+    }*/
     // intentionally empty
 }

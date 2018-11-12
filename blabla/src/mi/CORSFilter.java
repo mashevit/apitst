@@ -1,4 +1,4 @@
-package mi;
+/*package mi;
 
 import java.io.IOException;
 
@@ -18,4 +18,4 @@ public class CORSFilter implements ContainerResponseFilter {
             responseContext.getHeaders().putSingle("Access-Control-Allow-Headers", reqHeader);
         }
     }
-}
+}*/

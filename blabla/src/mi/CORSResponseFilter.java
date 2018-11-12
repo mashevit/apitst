@@ -1,4 +1,4 @@
-package mi;
+/*package mi;
 import java.io.IOException;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -20,4 +20,4 @@ implements ContainerResponseFilter {
 		headers.add("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Codingpedia");
 	}
 
-}
+}*/
